@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LKPD Interaktif Fisika — GLB dan GLBB</title>
+<style>
+:root{--blue:#1769aa;--sky:#eaf6ff;--navy:#12304a;--yellow:#ffd65a;--ink:#243447;--muted:#617386;--line:#d7e5ef;--white:#fff}
+*{box-sizing:border-box} body{margin:0;background:#f3f8fc;color:var(--ink);font:16px/1.6 "Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(130deg,#1769aa,#4da9dc);color:white;padding:30px 18px}
+.wrap{max-width:1050px;margin:auto;padding:0 16px}
+.eyebrow{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#fff2bd}
+h1{font-size:clamp(1.65rem,4vw,2.5rem);line-height:1.2;margin:.4rem 0 1rem}
+header p{max-width:760px;margin:0}
+nav{position:sticky;top:0;background:white;border-bottom:1px solid var(--line);z-index:5;padding:8px;display:flex;gap:7px;overflow:auto}
+nav a{white-space:nowrap;text-decoration:none;color:var(--blue);border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:.9rem}
+main{max-width:1050px;margin:22px auto;padding:0 16px 50px}
+section,.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0;box-shadow:0 4px 16px #173d5910}
+h2{font-size:1.35rem;color:var(--navy);margin-top:0} h3{color:var(--blue);margin-bottom:6px}
+.tag{display:inline-block;background:var(--sky);color:var(--blue);padding:3px 10px;border-radius:20px;font-size:.8rem;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+label{display:block;font-weight:600;font-size:.92rem;margin-bottom:5px}
+input,textarea,select{width:100%;padding:10px 11px;border:1px solid #bfd2e1;border-radius:9px;font:inherit;color:var(--ink);background:#fff}
+textarea{min-height:90px;resize:vertical}
+button,.button{border:0;border-radius:9px;background:var(--blue);color:white;padding:10px 15px;font:inherit;font-weight:650;cursor:pointer;text-decoration:none;display:inline-block}
+button.secondary{background:#eaf3fa;color:var(--blue);border:1px solid var(--line)}
+button.yellow{background:var(--yellow);color:#4a3a00}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+.equation{background:#f2f8fd;border-left:4px solid var(--blue);border-radius:8px;padding:12px 15px;margin:9px 0;font-family:"Cambria Math","Times New Roman",serif;font-size:1.2rem;font-weight:600;letter-spacing:.01em;overflow-wrap:anywhere}
+.note{background:#fff8d9;border:1px solid #f1df8a;padding:12px 14px;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}th,td{border:1px solid var(--line);padding:8px;text-align:center}th{background:var(--sky);color:var(--navy)}td input{min-width:70px;padding:7px}
+.table-wrap{overflow-x:auto}.chart-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:12px 0}.chart-controls>div{flex:1;min-width:150px}.chartbox{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fbfdff;margin:12px 0}.chartbox svg{width:100%;height:auto;display:block;min-height:230px}.chart-caption{font-size:.9rem;color:var(--muted)}.step{border-left:3px solid var(--yellow);padding:4px 0 4px 13px;margin:8px 0}.print-graphs{display:none}.print-graph{border:1px solid #b9c9d5;border-radius:8px;padding:10px;margin:10px 0;break-inside:avoid;page-break-inside:avoid}.print-graph h4{margin:0 0 4px;color:#12304a;font-size:12pt}.print-graph svg{display:block;width:100%;height:auto;max-height:300px}.print-graph p{font-size:9pt;margin:3px 0 0}
+.question{padding:12px 0;border-bottom:1px solid var(--line)}.question:last-child{border:0}
+.progressbar{height:9px;background:#e3edf5;border-radius:20px;overflow:hidden}.progressbar span{display:block;height:100%;width:0;background:#28a36a;transition:width .2s}
+.small{color:var(--muted);font-size:.9rem}.score{font-weight:700;color:var(--blue)}
+footer{text-align:center;padding:25px;color:var(--muted)}
+@media(max-width:600px){section,.panel{padding:16px}th,td{padding:6px;font-size:.85rem}.equation{font-size:1.05rem}}
+@media print{
+ @page{size:A4 portrait;margin:12mm}
+ html,body{background:#fff!important;color:#111!important;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ nav,.actions,button,.chart-controls{display:none!important}
+ header{background:#fff!important;color:#111!important;padding:10px 0;border-bottom:2px solid #1769aa}
+ header .eyebrow{color:#1769aa}header p{color:#111}
+ main{max-width:none;margin:0;padding:0}
+ section,.panel{background:#fff!important;box-shadow:none;border:1px solid #cbd5dc;border-radius:0;padding:12px;margin:10px 0;break-inside:auto;page-break-inside:auto}
+ .table-wrap{overflow:visible!important}table{font-size:8.5pt;break-inside:avoid;page-break-inside:avoid}tr{break-inside:avoid;page-break-inside:avoid}td input, input,textarea,select{border:0!important;background:transparent!important;color:#111!important;padding:2px!important;box-shadow:none!important;appearance:none}
+ textarea{min-height:42px;resize:none;overflow:visible}
+ .chartbox{break-inside:avoid;page-break-inside:avoid;background:#fff!important;border:1px solid #aaa}
+ .chartbox svg{min-height:0!important;width:100%!important;height:auto!important;max-height:300px}
+ .print-graphs{display:block!important;break-before:page;page-break-before:always}
+ .print-graph{break-inside:avoid!important;page-break-inside:avoid!important;background:#fff!important}
+ .print-graph svg{height:210px!important;max-height:210px!important}
+ .print-graph h4{break-after:avoid;page-break-after:avoid}
+ footer{padding:8px}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">LKPD Digital • Fisika Kelas X • Fase E</div>
+<h1>Menyelidiki Gerak Lurus Beraturan (GLB) dan Gerak Lurus Berubah Beraturan (GLBB)</h1>
+<p>Eksplorasi gerak melalui simulasi <b>PhET Moving Man</b> dengan model <i>Discovery Learning</i>. LKPD dikerjakan secara individual.</p>
+<div class="actions"><a class="button yellow" href="https://phet.colorado.edu/in/simulations/moving-man" target="_blank" rel="noopener">Buka Simulasi PhET ↗</a></div>
+</div></header>
+<nav>
+<a href="#identitas">Identitas</a><a href="#materi">Materi</a><a href="#petunjuk">Petunjuk</a><a href="#stimulasi">Stimulasi</a><a href="#percobaan">Percobaan</a><a href="#analisis">Analisis</a><a href="#evaluasi">Evaluasi</a><a href="#refleksi">Refleksi</a>
+</nav>
+<main>
+<section id="identitas"><h2>👤 Identitas Peserta Didik</h2>
+<div class="grid">
+<div><label for="nama">Nama lengkap</label><input id="nama" data-save placeholder="Tulis nama lengkap"></div>
+<div><label for="kelas">Kelas</label><input id="kelas" data-save placeholder="Contoh: X-2"></div>
+<div><label for="absen">Nomor absen</label><input id="absen" data-save type="number" min="1" placeholder="Nomor absen"></div>
+<div><label for="tanggal">Tanggal pengerjaan</label><input id="tanggal" data-save type="date"></div>
+</div>
+<p><span class="tag">Alokasi waktu: 2 JP (90 menit)</span> <span class="tag">Kerja individual</span></p>
+<p class="small">Isi jawaban berdasarkan percobaanmu sendiri. Data pada tabel tidak diisi otomatis agar kamu mencatat hasil yang benar-benar diamati.</p>
+</section>
+
+<section id="materi"><h2>📘 Materi Singkat</h2>
+<h3>1. Posisi, perpindahan, jarak, dan waktu</h3>
+<p><b>Posisi</b> menunjukkan letak benda terhadap titik acuan. <b>Perpindahan</b> adalah perubahan posisi dari titik awal ke titik akhir, sedangkan <b>jarak</b> adalah panjang seluruh lintasan yang ditempuh. Jarak merupakan besaran skalar, sedangkan perpindahan memiliki besar dan arah. Waktu menunjukkan lamanya gerak berlangsung.</p>
+<div class="equation">Perpindahan: Δx = x₂ − x₁</div>
+<p>Simbol Δ (delta) berarti perubahan suatu besaran. Jadi, Δx dibaca “perubahan posisi”.</p>
+<h3>2. Gerak Lurus Beraturan (GLB)</h3>
+<p>GLB adalah gerak pada lintasan lurus dengan kecepatan tetap. Benda menempuh perpindahan yang sama dalam selang waktu yang sama. Karena kecepatannya tidak berubah, percepatannya nol.</p>
+<div class="equation">Posisi: x = x₀ + vt</div>
+<div class="equation">Kecepatan rata-rata: v = Δx / Δt = (x₂ − x₁) / (t₂ − t₁)</div>
+<div class="equation">Percepatan: a = 0</div>
+<p>Grafik posisi–waktu berupa garis lurus. Grafik kecepatan–waktu mendatar, sedangkan grafik percepatan–waktu berada pada nilai nol.</p>
+<h3>3. Gerak Lurus Berubah Beraturan (GLBB)</h3>
+<p>GLBB adalah gerak pada lintasan lurus dengan percepatan tetap. Kecepatan berubah secara teratur setiap sekon. Jika kecepatan dan percepatan searah, kelajuan bertambah; jika berlawanan arah, kelajuan berkurang.</p>
+<div class="equation">Kecepatan: v = v₀ + at</div>
+<div class="equation">Posisi: x = x₀ + v₀t + ½at²</div>
+<div class="equation">Percepatan: a = Δv / Δt = (v₂ − v₁) / (t₂ − t₁)</div>
+<p>Grafik posisi–waktu berbentuk kurva, grafik kecepatan–waktu berupa garis lurus, dan grafik percepatan–waktu mendatar pada nilai percepatan tetap.</p>
+<h3>4. Makna simbol dan satuan</h3>
+<div class="table-wrap"><table><thead><tr><th>Simbol</th><th>Makna</th><th>Satuan SI</th></tr></thead><tbody>
+<tr><td>x</td><td>Posisi</td><td>meter (m)</td></tr><tr><td>x₀</td><td>Posisi awal</td><td>meter (m)</td></tr><tr><td>v</td><td>Kecepatan</td><td>meter per sekon (m/s)</td></tr><tr><td>v₀</td><td>Kecepatan awal</td><td>meter per sekon (m/s)</td></tr><tr><td>a</td><td>Percepatan</td><td>meter per sekon kuadrat (m/s²)</td></tr><tr><td>t</td><td>Waktu</td><td>sekon (s)</td></tr>
+</tbody></table></div>
+<div class="note"><b>Ingat!</b> Tanda positif dan negatif menunjukkan arah berdasarkan titik acuan. Percepatan negatif tidak selalu berarti benda melambat. Perhatikan arah kecepatan dan percepatannya, serta gunakan grafik dan data pengamatan sebagai bukti utama untuk membedakan GLB dan GLBB.</div>
+</section>
+
+<section id="petunjuk"><h2>🧭 Petunjuk Penggunaan Simulasi</h2>
+<div class="step">1. Buka simulasi PhET Moving Man melalui tombol di bagian atas.</div><div class="step">2. Pilih tampilan yang menunjukkan posisi, kecepatan, percepatan, dan grafik.</div><div class="step">3. Kenali pengaturan posisi awal, kecepatan, percepatan, tombol mulai, jeda, dan reset.</div><div class="step">4. Masukkan parameter sesuai setiap percobaan, lalu jalankan simulasi.</div><div class="step">5. Amati gerakan dan grafik posisi–waktu, kecepatan–waktu, serta percepatan–waktu.</div><div class="step">6. Catat data yang benar-benar terlihat. Gunakan reset sebelum mengubah kondisi.</div>
+<p class="small">Jika tata letak tombol berbeda, cari kontrol yang memiliki fungsi sama. Bila waktu tertentu tidak dapat diamati, tulis “tidak teramati” dan jangan mengarang data.</p>
+</section>
+
+<section id="stimulasi"><h2>🔎 Fase 1 — Stimulation (Pemberian Rangsangan)</h2>
+<p>Seorang siswa berjalan di koridor sekolah. Awalnya ia berjalan dengan kecepatan tetap. Ketika menyadari bel sekolah hampir berbunyi, ia mempercepat langkahnya.</p>
+<p><b>Pertanyaan pemantik:</b></p>
+<div class="question"><label>1. Apa perbedaan gerak siswa pada kedua kondisi tersebut?</label><textarea data-save placeholder="Tuliskan pendapatmu..."></textarea></div>
+<div class="question"><label>2. Bagaimana cara mengetahui apakah kecepatannya tetap atau berubah?</label><textarea data-save placeholder="Tuliskan pendapatmu..."></textarea></div>
+<div class="question"><label>3. Menurutmu, bagaimana grafik dapat membantu menjelaskan gerak?</label><textarea data-save placeholder="Tuliskan pendapatmu..."></textarea></div>
+</section>
+
+<section id="hipotesis"><h2>💡 Fase 2 — Problem Statement (Identifikasi Masalah)</h2>
+<p>Sebelum melakukan percobaan, tuliskan dugaan awalmu.</p>
+<div class="question"><label>1. Bagaimana bentuk grafik ketika kecepatan tetap?</label><textarea data-save></textarea></div>
+<div class="question"><label>2. Apa yang terjadi pada grafik kecepatan–waktu ketika percepatan tetap dan tidak nol?</label><textarea data-save></textarea></div>
+<div class="question"><label>3. Bagaimana hubungan percepatan dengan perubahan kecepatan?</label><textarea data-save></textarea></div>
+</section>
+
+<section id="percobaan"><h2>🧪 Fase 3 — Data Collection (Pengumpulan Data)</h2>
+<p>Masukkan hasil pengamatan dari simulasi ke tabel. Gunakan satuan yang tercantum di setiap kolom.</p>
+<div class="panel"><h3>Percobaan 1: Menyelidiki GLB</h3><p><b>Pengaturan:</b> x₀ = 0 m, v = 2 m/s, a = 0 m/s².</p><ol><li>Tekan reset dan atur parameter.</li><li>Jalankan simulasi dan amati ketiga grafik.</li><li>Catat posisi, kecepatan, dan percepatan pada t = 0, 1, 2, 3, dan 4 s jika tersedia.</li></ol>
+<div class="table-wrap"><table><thead><tr><th>Waktu (s)</th><th>Posisi (m)</th><th>Kecepatan (m/s)</th><th>Percepatan (m/s²)</th></tr></thead><tbody>
+<tr><td>0</td><td><input data-save aria-label="GLB posisi waktu 0"></td><td><input data-save aria-label="GLB kecepatan waktu 0"></td><td><input data-save aria-label="GLB percepatan waktu 0"></td></tr><tr><td>1</td><td><input data-save aria-label="GLB posisi waktu 1"></td><td><input data-save aria-label="GLB kecepatan waktu 1"></td><td><input data-save aria-label="GLB percepatan waktu 1"></td></tr><tr><td>2</td><td><input data-save aria-label="GLB posisi waktu 2"></td><td><input data-save aria-label="GLB kecepatan waktu 2"></td><td><input data-save aria-label="GLB percepatan waktu 2"></td></tr><tr><td>3</td><td><input data-save aria-label="GLB posisi waktu 3"></td><td><input data-save aria-label="GLB kecepatan waktu 3"></td><td><input data-save aria-label="GLB percepatan waktu 3"></td></tr><tr><td>4</td><td><input data-save aria-label="GLB posisi waktu 4"></td><td><input data-save aria-label="GLB kecepatan waktu 4"></td><td><input data-save aria-label="GLB percepatan waktu 4"></td></tr>
+</tbody></table></div>
+<label>Pengamatan: apakah perubahan posisi tiap sekon sama? Bagaimana bentuk grafik posisi–waktu?</label><textarea data-save></textarea>
+</div>
+<div class="panel"><h3>Percobaan 2: GLBB dengan percepatan positif</h3><p><b>Pengaturan:</b> x₀ = 0 m, v₀ = 0 m/s, a = 1 m/s².</p><ol><li>Tekan reset dan masukkan parameter.</li><li>Jalankan simulasi, amati perubahan kecepatan dan grafik.</li><li>Catat data pada waktu yang sama seperti percobaan pertama jika tersedia.</li></ol>
+<div class="table-wrap"><table><thead><tr><th>Waktu (s)</th><th>Posisi (m)</th><th>Kecepatan (m/s)</th><th>Percepatan (m/s²)</th></tr></thead><tbody>
+<tr><td>0</td><td><input data-save aria-label="GLBB positif posisi waktu 0"></td><td><input data-save aria-label="GLBB positif kecepatan waktu 0"></td><td><input data-save aria-label="GLBB positif percepatan waktu 0"></td></tr><tr><td>1</td><td><input data-save aria-label="GLBB positif posisi waktu 1"></td><td><input data-save aria-label="GLBB positif kecepatan waktu 1"></td><td><input data-save aria-label="GLBB positif percepatan waktu 1"></td></tr><tr><td>2</td><td><input data-save aria-label="GLBB positif posisi waktu 2"></td><td><input data-save aria-label="GLBB positif kecepatan waktu 2"></td><td><input data-save aria-label="GLBB positif percepatan waktu 2"></td></tr><tr><td>3</td><td><input data-save aria-label="GLBB positif posisi waktu 3"></td><td><input data-save aria-label="GLBB positif kecepatan waktu 3"></td><td><input data-save aria-label="GLBB positif percepatan waktu 3"></td></tr><tr><td>4</td><td><input data-save aria-label="GLBB positif posisi waktu 4"></td><td><input data-save aria-label="GLBB positif kecepatan waktu 4"></td><td><input data-save aria-label="GLBB positif percepatan waktu 4"></td></tr>
+</tbody></table></div><label>Pengamatan: bagaimana perubahan kecepatan tiap sekon? Mengapa grafik posisi–waktu berbeda dari Percobaan 1?</label><textarea data-save></textarea></div>
+<div class="panel"><h3>Percobaan 3: GLBB dengan percepatan negatif</h3><p><b>Pengaturan:</b> x₀ = 0 m, v₀ = 4 m/s, a = −1 m/s².</p><ol><li>Tekan reset dan masukkan parameter.</li><li>Amati kecepatan serta arah gerak selama simulasi.</li><li>Catat data pada t = 0, 1, 2, 3, dan 4 s jika dapat diamati.</li></ol>
+<div class="table-wrap"><table><thead><tr><th>Waktu (s)</th><th>Posisi (m)</th><th>Kecepatan (m/s)</th><th>Percepatan (m/s²)</th></tr></thead><tbody>
+<tr><td>0</td><td><input data-save aria-label="GLBB negatif posisi waktu 0"></td><td><input data-save aria-label="GLBB negatif kecepatan waktu 0"></td><td><input data-save aria-label="GLBB negatif percepatan waktu 0"></td></tr><tr><td>1</td><td><input data-save aria-label="GLBB negatif posisi waktu 1"></td><td><input data-save aria-label="GLBB negatif kecepatan waktu 1"></td><td><input data-save aria-label="GLBB negatif percepatan waktu 1"></td></tr><tr><td>2</td><td><input data-save aria-label="GLBB negatif posisi waktu 2"></td><td><input data-save aria-label="GLBB negatif kecepatan waktu 2"></td><td><input data-save aria-label="GLBB negatif percepatan waktu 2"></td></tr><tr><td>3</td><td><input data-save aria-label="GLBB negatif posisi waktu 3"></td><td><input data-save aria-label="GLBB negatif kecepatan waktu 3"></td><td><input data-save aria-label="GLBB negatif percepatan waktu 3"></td></tr><tr><td>4</td><td><input data-save aria-label="GLBB negatif posisi waktu 4"></td><td><input data-save aria-label="GLBB negatif kecepatan waktu 4"></td><td><input data-save aria-label="GLBB negatif percepatan waktu 4"></td></tr>
+</tbody></table></div><label>Pengamatan: apa yang terjadi pada kelajuan saat benda bergerak ke arah positif? Apa yang mungkin terjadi saat kecepatannya mencapai nol?</label><textarea data-save></textarea></div>
+<div class="panel" id="grafik-digital"><h3>Grafik Otomatis dari Tabel Pengamatan</h3>
+<p>Setelah mengisi tabel, pilih percobaan dan besaran yang ingin ditampilkan. Grafik akan dibuat dari angka yang kamu masukkan. Pastikan data sudah sesuai dengan hasil simulasi.</p>
+<div class="chart-controls"><div><label for="chartExp">Pilih percobaan</label><select id="chartExp"><option value="glb">Percobaan 1 — GLB</option><option value="pos">Percobaan 2 — GLBB, a positif</option><option value="neg">Percobaan 3 — GLBB, a negatif</option></select></div>
+<div><label for="chartY">Besaran pada sumbu vertikal (Y)</label><select id="chartY"><option value="posisi">Posisi (m)</option><option value="kecepatan">Kecepatan (m/s)</option><option value="percepatan">Percepatan (m/s²)</option></select></div>
+<div><button type="button" id="drawChart">Buat / perbarui grafik</button></div></div>
+<div class="chartbox"><div id="chartTitle"><b>Grafik posisi terhadap waktu</b></div><svg id="dataChart" viewBox="0 0 720 360" role="img" aria-label="Grafik dari tabel pengamatan"></svg><div class="chart-caption" id="chartMessage">Grafik contoh ditampilkan sampai data pengamatan dimasukkan. Setelah itu grafik mengikuti data tabel.</div></div>
+<p class="small">Sumbu horizontal (X) menunjukkan waktu dalam sekon. Sumbu vertikal (Y) mengikuti besaran yang dipilih. Grafik menghubungkan titik data sesuai urutan waktu.</p><div class="print-graphs" id="printGraphs"><h3>Seluruh Grafik Hasil Pengamatan</h3><p>Grafik berikut disertakan saat dicetak atau disimpan sebagai PDF. Jika tabel belum diisi, grafik menggunakan data contoh yang ditandai pada keterangan.</p><div id="printGraphList"></div></div></div>
+<div class="note">Catatan grafik: kamu juga dapat menggambar ulang grafik di buku untuk berlatih membaca skala dan memberi judul sumbu.</div>
+<label>Deskripsi/sketsa grafik dari hasil pengamatan</label><textarea data-save placeholder="Jelaskan bentuk grafik untuk ketiga percobaan..."></textarea>
+</section>
+
+<section id="analisis"><h2>📊 Fase 4 — Data Processing (Pengolahan Data)</h2>
+<p>Gunakan dua titik data hasil pengamatanmu untuk menghitung kecepatan rata-rata dan percepatan.</p>
+<div class="equation">Kecepatan rata-rata: v = (x₂ − x₁) / (t₂ − t₁)</div>
+<div class="equation">Percepatan: a = (v₂ − v₁) / (t₂ − t₁)</div>
+<div class="question"><label>1. Pilih dua titik data dari Percobaan 1, lalu hitung kecepatan rata-ratanya.</label><textarea data-save placeholder="Data yang dipilih, substitusi nilai, perhitungan, dan satuan..."></textarea></div>
+<div class="question"><label>2. Hitung perubahan kecepatan pada satu interval waktu di Percobaan 2.</label><textarea data-save></textarea></div>
+<div class="question"><label>3. Tentukan percepatan berdasarkan perubahan kecepatan per satuan waktu.</label><textarea data-save></textarea></div>
+<div class="question"><label>4. Bandingkan grafik posisi–waktu, kecepatan–waktu, dan percepatan–waktu pada ketiga percobaan.</label><textarea data-save></textarea></div>
+<div class="question"><label>5. Tuliskan pola atau hubungan yang kamu temukan dari data.</label><textarea data-save></textarea></div>
+</section>
+
+<section id="verification"><h2>✅ Fase 5 — Verification (Pembuktian)</h2>
+<div class="question"><label>1. Apakah hasil Percobaan 1 sesuai dengan karakteristik GLB? Jelaskan menggunakan data.</label><textarea data-save></textarea></div>
+<div class="question"><label>2. Apakah hasil Percobaan 2 menunjukkan percepatan tetap? Apa buktinya?</label><textarea data-save></textarea></div>
+<div class="question"><label>3. Apa perbedaan grafik kecepatan–waktu pada Percobaan 2 dan Percobaan 3?</label><textarea data-save></textarea></div>
+<div class="question"><label>4. Apakah tanda percepatan selalu menunjukkan benda sedang bertambah cepat? Jelaskan dengan memperhatikan arah kecepatan.</label><textarea data-save></textarea></div>
+<label>Periksa hipotesis awalmu</label><select data-save><option value="">Pilih salah satu</option><option>Hipotesis saya terbukti</option><option>Hipotesis saya perlu diperbaiki</option></select>
+<label>Penjelasan berdasarkan bukti pengamatan</label><textarea data-save></textarea>
+</section>
+
+<section id="kesimpulan"><h2>🧠 Fase 6 — Generalization (Menarik Kesimpulan)</h2>
+<p>Tuliskan kesimpulan individual sepanjang 100–150 kata. Sertakan karakteristik GLB dan GLBB, hubungan kecepatan–percepatan–waktu, perbedaan grafik, serta satu contoh dalam kehidupan sehari-hari.</p>
+<textarea data-save style="min-height:170px" placeholder="Kesimpulan saya..."></textarea>
+</section>
+
+<section id="evaluasi"><h2>🎯 Evaluasi Individu — Taksonomi Bloom Revisi</h2>
+<p>Jawab berdasarkan konsep dan data yang telah kamu peroleh.</p>
+<div class="question"><span class="tag">C2 • Memahami</span><label>1. Jelaskan perbedaan GLB dan GLBB berdasarkan kecepatan dan percepatannya.</label><textarea data-save></textarea></div>
+<div class="question"><span class="tag">C3 • Menerapkan</span><label>2. Benda bergerak dengan kecepatan tetap 3 m/s selama 4 s. Jika posisi awalnya 0 m, tentukan posisi akhirnya dan tuliskan langkah perhitungan.</label><textarea data-save></textarea></div>
+<div class="question"><span class="tag">C4 • Menganalisis</span><label>3. Bandingkan grafik kecepatan–waktu pada Percobaan 1 dan Percobaan 2. Apa makna bentuk masing-masing grafik?</label><textarea data-save></textarea></div>
+<div class="question"><span class="tag">C4 • Menganalisis</span><label>4. Benda memiliki kecepatan awal 4 m/s dan percepatan −1 m/s². Tentukan kecepatannya setelah 3 s dan jelaskan perubahan geraknya.</label><textarea data-save></textarea></div>
+<div class="question"><span class="tag">C5 • Mengevaluasi</span><label>5. Seorang siswa berkata, “Setiap benda dengan percepatan negatif pasti sedang melambat.” Evaluasilah pernyataan ini dengan mempertimbangkan arah kecepatan dan percepatan.</label><textarea data-save></textarea></div>
+<div class="question"><span class="tag">C6 • Mencipta</span><label>6. Rancang kondisi simulasi untuk menghasilkan GLB atau GLBB. Tuliskan posisi awal, kecepatan awal, percepatan, prediksi grafik, lalu uji dan jelaskan hasilnya.</label><textarea data-save></textarea></div>
+<div class="note"><b>Pedoman penilaian uraian:</b> nilai berdasarkan ketepatan konsep (40%), penggunaan data atau alasan (30%), langkah perhitungan dan satuan bila relevan (20%), serta kejelasan penjelasan (10%). Guru dapat menyesuaikan rubrik ini.</div>
+</section>
+
+<section id="refleksi"><h2>🌱 Refleksi Siswa</h2>
+<div class="question"><label>1. Konsep apa yang paling saya pahami?</label><textarea data-save></textarea></div>
+<div class="question"><label>2. Bagian mana yang masih membingungkan?</label><textarea data-save></textarea></div>
+<div class="question"><label>3. Bagaimana grafik membantu saya memahami gerak?</label><textarea data-save></textarea></div>
+<div><label>4. Seberapa yakin saya membedakan GLB dan GLBB?</label><select data-save><option value="">Pilih tingkat pemahaman</option><option>Belum paham</option><option>Cukup paham</option><option>Paham</option><option>Sangat paham</option></select></div>
+</section>
+
+<section><h2>📌 Rekap dan Simpan Pekerjaan</h2>
+<p>Progress di bawah ini menunjukkan perkiraan kelengkapan isian, bukan nilai akademik.</p><div class="progressbar"><span id="progress"></span></div><p id="progressText" class="small">0% kolom terisi</p>
+<div class="actions"><button id="saveBtn">Simpan isian di perangkat ini</button><button class="secondary" id="downloadBtn">Unduh jawaban (.txt)</button><button class="secondary" id="printBtn">Cetak / simpan PDF</button><button class="secondary" id="clearBtn">Hapus semua isian</button></div>
+<p id="status" class="small" aria-live="polite">Isian otomatis disimpan di browser saat kamu mengetik. Gunakan tombol unduh untuk membuat salinan.</p>
+<p class="small">Penilaian yang disarankan: data dan tabel 25%; analisis grafik dan perhitungan 25%; evaluasi 30%; kesimpulan dan refleksi 20%.</p>
+</section>
+</main>
+<footer>LKPD Fisika Kelas X • Discovery Learning • PhET Moving Man</footer>
+<script>
+const fields=[...document.querySelectorAll('[data-save]')];
+const key='lkpd_glb_glbb_v1';
+function refresh(){let filled=fields.filter(e=>e.value.trim()!=='').length;let pct=fields.length?Math.round(filled/fields.length*100):0;document.getElementById('progress').style.width=pct+'%';document.getElementById('progressText').textContent=pct+'% kolom terisi ('+filled+' dari '+fields.length+')';}
+function save(silent=false){let data={};fields.forEach((e,i)=>data[i]=e.value);try{localStorage.setItem(key,JSON.stringify(data));document.getElementById('status').textContent='Isian tersimpan di browser perangkat ini.';}catch(err){document.getElementById('status').textContent='Penyimpanan browser tidak tersedia. Silakan unduh jawaban sebagai cadangan.';}}
+try{let saved=JSON.parse(localStorage.getItem(key)||'null');if(saved)fields.forEach((e,i)=>{if(saved[i]!==undefined)e.value=saved[i]});}catch(e){}
+fields.forEach(e=>e.addEventListener('input',()=>{refresh();save(true); if(document.getElementById('dataChart')) drawDataChart();}));refresh();
+
+const chartLabels={posisi:'Posisi (m)',kecepatan:'Kecepatan (m/s)',percepatan:'Percepatan (m/s²)'};
+const chartPrefixes={glb:'GLB',pos:'GLBB dipercepat (a positif)',neg:'GLBB diperlambat (a negatif)'};
+const times=[0,1,2,3,4];
+const sampleData={
+ glb:{posisi:[0,2,4,6,8],kecepatan:[2,2,2,2,2],percepatan:[0,0,0,0,0]},
+ pos:{posisi:[0,.5,2,4.5,8],kecepatan:[0,1,2,3,4],percepatan:[1,1,1,1,1]},
+ neg:{posisi:[0,3.5,6,7.5,8],kecepatan:[4,3,2,1,0],percepatan:[-1,-1,-1,-1,-1]}
+};
+function getSeries(exp, kind){
+ const panels=[...document.querySelectorAll('#percobaan > .panel')];
+ const row=exp==='glb'?panels[0]:exp==='pos'?panels[1]:panels[2];
+ if(!row)return [];
+ const rows=[...row.querySelectorAll('tbody tr')];
+ const col=kind==='posisi'?1:kind==='kecepatan'?2:3;
+ return rows.map(tr=>{const cells=tr.querySelectorAll('td');const t=Number(cells[0].textContent.trim());const raw=cells[col].querySelector('input')?.value.trim();if(raw===''||raw===undefined)return null;const y=Number(raw.replace(',','.'));return Number.isFinite(y)?{t,y}:null;}).filter(Boolean);
+}
+function getSeriesForDisplay(exp,kind){
+ const actual=getSeries(exp,kind);
+ if(actual.length) return {points:actual,example:false};
+ return {points:times.map((t,i)=>({t,y:sampleData[exp][kind][i]})),example:true};
+}
+function makeSvg(points,kind,label){
+ const W=720,H=340,L=78,R=24,T=24,B=58,pw=W-L-R,ph=H-T-B;
+ let xmin=Math.min(0,...points.map(p=>p.t)),xmax=Math.max(...points.map(p=>p.t));if(xmax===xmin)xmax=xmin+1;
+ let ymin=Math.min(0,...points.map(p=>p.y)),ymax=Math.max(0,...points.map(p=>p.y));
+ if(ymax===ymin){ymin-=1;ymax+=1;}else{const pad=(ymax-ymin)*.12;ymin-=pad;ymax+=pad;}
+ const X=x=>L+(x-xmin)/(xmax-xmin)*pw, Y=y=>T+(ymax-y)/(ymax-ymin)*ph;
+ let out='';
+ for(let i=0;i<=5;i++){
+  let xx=L+i*pw/5,xv=xmin+i*(xmax-xmin)/5;out+=`<line x1="${xx}" y1="${T}" x2="${xx}" y2="${T+ph}" stroke="#dce5ec"/><text x="${xx}" y="${T+ph+22}" text-anchor="middle" font-size="12" fill="#34495e">${Number(xv.toFixed(2))}</text>`;
+  let yy=T+i*ph/5,yv=ymax-i*(ymax-ymin)/5;out+=`<line x1="${L}" y1="${yy}" x2="${L+pw}" y2="${yy}" stroke="#dce5ec"/><text x="${L-10}" y="${yy+4}" text-anchor="end" font-size="12" fill="#34495e">${Number(yv.toFixed(2))}</text>`;
+ }
+ out+=`<line x1="${L}" y1="${T}" x2="${L}" y2="${T+ph}" stroke="#263746" stroke-width="2"/><line x1="${L}" y1="${T+ph}" x2="${L+pw}" y2="${T+ph}" stroke="#263746" stroke-width="2"/>`;
+ out+=`<text x="${L+pw/2}" y="${H-12}" text-anchor="middle" font-size="14" fill="#172b3a">Waktu (s)</text><text x="18" y="${T+ph/2}" transform="rotate(-90 18 ${T+ph/2})" text-anchor="middle" font-size="14" fill="#172b3a">${chartLabels[kind]}</text>`;
+ const line=points.map((p,i)=>(i?'L':'M')+X(p.t)+','+Y(p.y)).join(' ');
+ if(points.length>1)out+=`<path d="${line}" fill="none" stroke="#1769aa" stroke-width="3" stroke-linejoin="round"/>`;
+ points.forEach(p=>{out+=`<circle cx="${X(p.t)}" cy="${Y(p.y)}" r="4.5" fill="#ffd65a" stroke="#1769aa" stroke-width="2"/>`;});
+ return out;
+}
+function drawDataChart(){
+ const exp=document.getElementById('chartExp').value,kind=document.getElementById('chartY').value;
+ const result=getSeriesForDisplay(exp,kind),svg=document.getElementById('dataChart');
+ document.getElementById('chartTitle').innerHTML='<b>Grafik '+chartLabels[kind]+' terhadap waktu — '+chartPrefixes[exp]+'</b>';
+ svg.innerHTML=makeSvg(result.points,kind,chartPrefixes[exp]);
+ document.getElementById('chartMessage').textContent=result.example?'Data tabel belum diisi. Grafik contoh ditampilkan; grafik akan mengikuti tabel setelah data dimasukkan.':'Grafik memuat '+result.points.length+' titik data dari tabel pengamatan.';
+}
+function drawAllPrintGraphs(){
+ const host=document.getElementById('printGraphList'); if(!host)return;
+ const specs=[['glb','posisi'],['glb','kecepatan'],['pos','posisi'],['pos','kecepatan'],['neg','posisi'],['neg','kecepatan']];
+ host.innerHTML='';
+ specs.forEach(([exp,kind])=>{
+  const result=getSeriesForDisplay(exp,kind);
+  const card=document.createElement('div');card.className='print-graph';
+  const title=document.createElement('h4');title.textContent='Grafik '+chartLabels[kind]+' terhadap waktu — '+chartPrefixes[exp];card.appendChild(title);
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 720 340');svg.setAttribute('role','img');svg.setAttribute('aria-label',title.textContent);svg.innerHTML=makeSvg(result.points,kind,chartPrefixes[exp]);card.appendChild(svg);
+  const note=document.createElement('p');note.textContent=result.example?'Data contoh (t = 0–4 s); tabel percobaan belum diisi untuk besaran ini.':'Berdasarkan '+result.points.length+' titik data yang tersedia pada tabel.';card.appendChild(note);
+  host.appendChild(card);
+ });
+}
+document.getElementById('drawChart').addEventListener('click',drawDataChart);
+document.getElementById('chartExp').addEventListener('change',drawDataChart);
+document.getElementById('chartY').addEventListener('change',drawDataChart);
+
+document.getElementById('saveBtn').addEventListener('click',()=>save());
+document.getElementById('downloadBtn').addEventListener('click',()=>{
+ let lines=['LKPD FISIKA KELAS X — GLB DAN GLBB','Nama: '+(document.getElementById('nama').value||'-'),'Kelas: '+(document.getElementById('kelas').value||'-'),'Nomor absen: '+(document.getElementById('absen').value||'-'),'Tanggal: '+(document.getElementById('tanggal').value||'-'),''];
+ fields.forEach((e,i)=>{let lab=e.labels&&e.labels[0]?e.labels[0].innerText:(e.getAttribute('aria-label')||e.placeholder||'Isian '+(i+1));if(e.tagName==='TEXTAREA'||e.tagName==='SELECT'||e.type!=='date'&&e.type!=='number'&&e.type!=='text'||e.value)lines.push(lab+'\n'+(e.value||'(belum diisi)')+'\n');});
+ let blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Jawaban_LKPD_GLB_GLBB.txt';a.click();URL.revokeObjectURL(a.href);
+});
+document.getElementById('printBtn').addEventListener('click',async()=>{
+ save(true);drawDataChart();drawAllPrintGraphs();
+ try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;}catch(e){}
+ await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+ window.print();
+});
+window.addEventListener('beforeprint',()=>{drawDataChart();drawAllPrintGraphs();});
+window.addEventListener('afterprint',()=>{drawDataChart();});
+// Tampilkan grafik contoh sejak halaman pertama kali dibuka.
+drawDataChart();drawAllPrintGraphs();
+document.getElementById('clearBtn').addEventListener('click',()=>{if(confirm('Hapus semua jawaban yang tersimpan pada browser ini?')){fields.forEach(e=>e.value='');localStorage.removeItem(key);refresh();document.getElementById('status').textContent='Semua isian telah dikosongkan.';}});
+</script>
+</body></html>
